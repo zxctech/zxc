@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /home/ec2-user/server/src
-npm start
-pm2 start npm --name "zxcapp" -- start
+npm run build
+pm2 serve build 3000 --spa
 pm2 startup
 pm2 save
 pm2 restart all
