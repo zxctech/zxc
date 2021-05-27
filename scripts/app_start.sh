@@ -1,5 +1,6 @@
 #!/bin/bash
 cd /home/ubuntu/server/src
+npm start
 pm2 start npm --name "zxcapp" -- start
 pm2 startup
 pm2 save
