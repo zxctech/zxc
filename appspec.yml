@@ -1,12 +1,13 @@
 # This is an appspec.yml template file for use with an EC2/On-Premises deployment in CodeDeploy.
-
+# https://docs.aws.amazon.com/codedeploy/latest/userguide/app-spec-ref.html
 version: 0.0
-# Specify "os: linux" if this revision targets Amazon Linux
-os: linux
+
+os: linux 
 
 files:
   - source: /
-    destination: /home/ec2-user/server
+    destination: /app
+    overwrite: true
 
 permissions:
   - object: /
@@ -15,22 +16,18 @@ permissions:
     group: ec2-user
 
 hooks:
-  # During the BeforeInstall deployment lifecycle event, run the commands
-  #   in the script specified in "location".
+
   BeforeInstall:
     - location: scripts/before_install.sh
-      timeout: 1000
-      runas: root
-  # During the AfterInstall deployment lifecycle event, run the commands
-  #   in the script specified in "location".
-  AfterInstall:
-    - location: scripts/after_install.sh
-      timeout: 1600
+      timeout: 300
       runas: root
 
-  # During the ApplicationStart deployment lifecycle event, run the commands
-  #   in the script specified in "location".
+  AfterInstall:
+      - location: scripts/after_install.sh
+        timeout: 1000
+        runas: root
+
   ApplicationStart:
-    - location: scripts/app_start.sh
+    - location: scripts/app_start.sh     
       timeout: 300
       runas: root
